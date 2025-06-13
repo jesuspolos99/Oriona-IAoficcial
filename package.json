@@ -74,11 +74,3 @@
     "typescript": "^5"
   }
 }
-borrar despues de aca:
-git init
-git add .
-git commit -m "Primer commit"
-git branch -M main
-git remote add origin https://github.com/jesuspolos99/Oriona-IAs.git
-git push -u origin main
-
