@@ -15,27 +15,34 @@ interface DeviceInfo {
   isTouchDevice: boolean
   isIOS: boolean
   isAndroid: boolean
+  isClient: boolean
 }
 
+const getInitialDeviceInfo = (): DeviceInfo => ({
+  type: "desktop",
+  isMobile: false,
+  isTablet: false,
+  isDesktop: true,
+  width: 1920,
+  height: 1080,
+  orientation: "landscape",
+  isTouchDevice: false,
+  isIOS: false,
+  isAndroid: false,
+  isClient: false,
+})
+
 export function useDeviceDetection(): DeviceInfo {
-  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>({
-    type: "desktop",
-    isMobile: false,
-    isTablet: false,
-    isDesktop: true,
-    width: 1920,
-    height: 1080,
-    orientation: "landscape",
-    isTouchDevice: false,
-    isIOS: false,
-    isAndroid: false,
-  })
+  const [deviceInfo, setDeviceInfo] = useState<DeviceInfo>(getInitialDeviceInfo)
 
   useEffect(() => {
     const detectDevice = () => {
+      // Verificar que estamos en el cliente
+      if (typeof window === "undefined") return
+
       const width = window.innerWidth
       const height = window.innerHeight
-      const userAgent = navigator.userAgent.toLowerCase()
+      const userAgent = typeof navigator !== "undefined" ? navigator.userAgent.toLowerCase() : ""
 
       // Detectar tipo de dispositivo por ancho de pantalla
       let type: DeviceType = "desktop"
@@ -49,7 +56,9 @@ export function useDeviceDetection(): DeviceInfo {
       const orientation: "portrait" | "landscape" = width < height ? "portrait" : "landscape"
 
       // Detectar si es dispositivo táctil
-      const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0
+      const isTouchDevice =
+        typeof window !== "undefined" &&
+        ("ontouchstart" in window || (typeof navigator !== "undefined" && navigator.maxTouchPoints > 0))
 
       // Detectar sistema operativo móvil
       const isIOS = /ipad|iphone|ipod/.test(userAgent)
@@ -76,19 +85,29 @@ export function useDeviceDetection(): DeviceInfo {
         isTouchDevice,
         isIOS,
         isAndroid,
+        isClient: true,
       })
     }
 
-    // Detectar al cargar
+    // Detectar al cargar (solo en cliente)
     detectDevice()
 
     // Detectar al cambiar tamaño de ventana
-    window.addEventListener("resize", detectDevice)
-    window.addEventListener("orientationchange", detectDevice)
+    const handleResize = () => {
+      detectDevice()
+    }
+
+    const handleOrientationChange = () => {
+      // Pequeño delay para que la orientación se actualice completamente
+      setTimeout(detectDevice, 100)
+    }
+
+    window.addEventListener("resize", handleResize)
+    window.addEventListener("orientationchange", handleOrientationChange)
 
     return () => {
-      window.removeEventListener("resize", detectDevice)
-      window.removeEventListener("orientationchange", detectDevice)
+      window.removeEventListener("resize", handleResize)
+      window.removeEventListener("orientationchange", handleOrientationChange)
     }
   }, [])
 

@@ -16,12 +16,14 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const device = useDeviceDetection()
+  const [isClient, setIsClient] = useState(false)
   const { chats, currentChatId, createNewChat, selectChat, updateChatTitle, deleteChat } = useChatContext()
   const [user, setUser] = useState<any>(null)
   const [editingChatId, setEditingChatId] = useState<string | null>(null)
   const [editTitle, setEditTitle] = useState("")
 
   useEffect(() => {
+    setIsClient(true)
     fetchUser()
   }, [])
 
@@ -49,7 +51,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const handleNewChat = () => {
     createNewChat()
     // Cerrar sidebar en móvil después de crear chat
-    if (device.isMobile) {
+    if (isClient && device.isClient && device.isMobile) {
       onToggle()
     }
   }
@@ -57,7 +59,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const handleSelectChat = (chatId: string) => {
     selectChat(chatId)
     // Cerrar sidebar en móvil después de seleccionar chat
-    if (device.isMobile) {
+    if (isClient && device.isClient && device.isMobile) {
       onToggle()
     }
   }
@@ -99,6 +101,24 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
 
   // Configuración responsiva
   const getSidebarConfig = () => {
+    // Valores por defecto seguros para SSR
+    if (!isClient || !device.isClient) {
+      return {
+        width: "w-80",
+        padding: "p-4",
+        headerPadding: "p-4",
+        contentPadding: "px-4",
+        footerPadding: "p-4",
+        textSize: "text-sm",
+        titleSize: "text-sm",
+        subtitleSize: "text-xs",
+        buttonSize: "h-9",
+        iconSize: "h-4 w-4",
+        gap: "gap-3",
+        logoSize: "w-6 h-6",
+      }
+    }
+
     if (device.isMobile) {
       return {
         width: "w-full",
@@ -152,7 +172,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
   return (
     <>
       {/* Overlay para móvil y tablet */}
-      {isOpen && (device.isMobile || device.isTablet) && (
+      {isOpen && isClient && device.isClient && (device.isMobile || device.isTablet) && (
         <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
           onClick={onToggle}

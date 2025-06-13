@@ -22,15 +22,21 @@ import { useChatContext } from "@/lib/chat-context"
 export function ChatForm({ className, ...props }: React.ComponentProps<"form">) {
   const device = useDeviceDetection()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  // Verificar que estamos en el cliente
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const { currentChat, currentChatId, createNewChat, addMessageToChat, clearCurrentChat } = useChatContext()
 
   // Cerrar sidebar automáticamente en móvil al cambiar orientación
   useEffect(() => {
-    if (device.isMobile && device.orientation === "portrait") {
+    if (isClient && device.isClient && device.isMobile && device.orientation === "portrait") {
       setSidebarOpen(false)
     }
-  }, [device.isMobile, device.orientation])
+  }, [device.isMobile, device.orientation, device.isClient, isClient])
 
   // Inicializar mensajes desde el contexto
   const initialMessages = currentChat?.messages || []
@@ -90,7 +96,7 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
       setInput("")
 
       // Cerrar sidebar en móvil después de enviar
-      if (device.isMobile) {
+      if (isClient && device.isClient && device.isMobile) {
         setSidebarOpen(false)
       }
     }
@@ -113,13 +119,34 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
     createNewChat()
     setMessages([])
     // Cerrar sidebar en móvil después de crear chat
-    if (device.isMobile) {
+    if (isClient && device.isClient && device.isMobile) {
       setSidebarOpen(false)
     }
   }
 
   // Configuración responsiva para diferentes elementos
   const getResponsiveConfig = () => {
+    // Valores por defecto seguros para SSR
+    if (!isClient || !device.isClient) {
+      return {
+        headerPadding: "p-4",
+        contentPadding: "px-4 py-4",
+        inputPadding: "p-4",
+        titleSize: "text-5xl md:text-8xl",
+        subtitleSize: "text-xl md:text-3xl",
+        cardPadding: "p-6",
+        buttonSize: "h-12 w-12",
+        iconSize: "h-6 w-6",
+        maxWidth: "max-w-4xl",
+        gridCols: "grid-cols-1 md:grid-cols-3",
+        gap: "gap-4 md:gap-6",
+        textSize: "text-sm md:text-lg",
+        messageMaxWidth: "max-w-[90%] md:max-w-[85%]",
+        messagePadding: "px-4 md:px-6 py-4 md:py-6",
+        placeholder: "Pregúntale algo a ORIONA desde las estrellas...",
+      }
+    }
+
     if (device.isMobile) {
       return {
         headerPadding: "p-3",

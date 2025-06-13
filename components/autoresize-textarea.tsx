@@ -13,7 +13,7 @@ export function AutoResizeTextarea({ className, value, onChange, ...props }: Aut
 
   const resizeTextarea = () => {
     const textarea = textareaRef.current
-    if (textarea) {
+    if (textarea && typeof window !== "undefined") {
       textarea.style.height = "auto"
       const scrollHeight = textarea.scrollHeight
       // Limitar altura máxima en móvil para mejor UX
@@ -28,6 +28,8 @@ export function AutoResizeTextarea({ className, value, onChange, ...props }: Aut
 
   // Manejar el scroll en móvil cuando el textarea crece
   useEffect(() => {
+    if (typeof window === "undefined") return
+
     const textarea = textareaRef.current
     if (textarea && window.innerWidth < 768) {
       const handleFocus = () => {
@@ -59,8 +61,8 @@ export function AutoResizeTextarea({ className, value, onChange, ...props }: Aut
         className,
       )}
       style={{
-        // Prevenir zoom en iOS
-        fontSize: window.innerWidth < 768 ? "16px" : undefined,
+        // Prevenir zoom en iOS solo si estamos en el cliente
+        fontSize: typeof window !== "undefined" && window.innerWidth < 768 ? "16px" : undefined,
         ...props.style,
       }}
     />
