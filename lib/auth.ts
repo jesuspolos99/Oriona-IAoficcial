@@ -23,35 +23,52 @@ export async function createSession(userId: number): Promise<string> {
     VALUES (${sessionId}, ${userId}, ${expiresAt.toISOString()})
   `
 
-  // Cache en Redis
-  await redis.setex(
-    cacheKeys.session(sessionId),
-    7 * 24 * 60 * 60, // 7 días en segundos
-    JSON.stringify({ userId, expiresAt: expiresAt.toISOString() }),
-  )
+  // Cache en Redis si está disponible
+  if (redis) {
+    try {
+      await redis.setex(
+        cacheKeys.session(sessionId),
+        7 * 24 * 60 * 60, // 7 días en segundos
+        JSON.stringify({ userId, expiresAt: expiresAt.toISOString() }),
+      )
+    } catch (error) {
+      console.error("Failed to cache session:", error)
+    }
+  }
 
   return sessionId
 }
 
 export async function getSession(sessionId: string) {
-  // Intentar obtener de cache primero
-  const cached = await redis.get(cacheKeys.session(sessionId))
-  if (cached) {
-    const session = JSON.parse(cached as string)
-    if (new Date(session.expiresAt) > new Date()) {
-      return session
+  // Intentar obtener de cache primero si Redis está disponible
+  if (redis) {
+    try {
+      const cached = await redis.get(cacheKeys.session(sessionId))
+      if (cached) {
+        const session = JSON.parse(cached as string)
+        if (new Date(session.expiresAt) > new Date()) {
+          return session
+        }
+      }
+    } catch (error) {
+      console.error("Failed to get cached session:", error)
     }
   }
 
-  // Si no está en cache, buscar en base de datos
-  const [session] = await sql`
-    SELECT s.*, u.email, u.name 
-    FROM sessions s
-    JOIN users u ON s.user_id = u.id
-    WHERE s.id = ${sessionId} AND s.expires_at > NOW()
-  `
+  // Si no está en cache o Redis no está disponible, buscar en base de datos
+  try {
+    const [session] = await sql`
+      SELECT s.*, u.email, u.name 
+      FROM sessions s
+      JOIN users u ON s.user_id = u.id
+      WHERE s.id = ${sessionId} AND s.expires_at > NOW()
+    `
 
-  return session || null
+    return session || null
+  } catch (error) {
+    console.error("Failed to get session from database:", error)
+    return null
+  }
 }
 
 export async function createJWT(payload: any): Promise<string> {
@@ -68,6 +85,13 @@ export async function verifyJWT(token: string) {
 }
 
 export async function deleteSession(sessionId: string) {
-  await sql`DELETE FROM sessions WHERE id = ${sessionId}`
-  await redis.del(cacheKeys.session(sessionId))
+  try {
+    await sql`DELETE FROM sessions WHERE id = ${sessionId}`
+
+    if (redis) {
+      await redis.del(cacheKeys.session(sessionId))
+    }
+  } catch (error) {
+    console.error("Failed to delete session:", error)
+  }
 }

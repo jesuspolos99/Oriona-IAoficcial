@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "setup-env": "chmod +x scripts/setup-env-vars.sh && ./scripts/setup-env-vars.sh",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
     "@ai-sdk/groq": "latest",
