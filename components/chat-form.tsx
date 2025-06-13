@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 
 import { useChat } from "ai/react"
 
-import { ArrowUpIcon, AlertCircle, RefreshCw, Sparkles, Zap, Menu } from "lucide-react"
+import { ArrowUpIcon, AlertCircle, RefreshCw, Sparkles, Zap, Menu, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
 import { AutoResizeTextarea } from "@/components/autoresize-textarea"
@@ -15,17 +15,42 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Sidebar } from "@/components/sidebar"
 import { SpaceElements } from "@/components/space-elements"
 import { AlienLogo } from "@/components/alien-logo"
+import { useChatContext } from "@/lib/chat-context"
 
 export function ChatForm({ className, ...props }: React.ComponentProps<"form">) {
   const [isMobile, setIsMobile] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const { messages, input, setInput, append, error, isLoading, reload } = useChat({
+  const { currentChat, currentChatId, createNewChat, addMessageToChat, clearCurrentChat } = useChatContext()
+
+  // Inicializar mensajes desde el contexto
+  const initialMessages = currentChat?.messages || []
+
+  const { messages, input, setInput, append, error, isLoading, reload, setMessages } = useChat({
     api: "/api/chat",
+    initialMessages,
     onError: (error) => {
       console.error("Error en useChat:", error)
     },
+    onFinish: (message) => {
+      // Guardar mensaje de la IA en el contexto
+      if (currentChatId) {
+        addMessageToChat(currentChatId, {
+          role: "assistant",
+          content: message.content,
+        })
+      }
+    },
   })
+
+  // Sincronizar mensajes cuando cambie el chat actual
+  useEffect(() => {
+    if (currentChat) {
+      setMessages(currentChat.messages)
+    } else {
+      setMessages([])
+    }
+  }, [currentChatId, currentChat, setMessages])
 
   useEffect(() => {
     const checkMobile = () => {
@@ -43,7 +68,18 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (input.trim() && !isLoading) {
-      void append({ content: input, role: "user" })
+      // Si no hay chat actual, crear uno nuevo
+      let chatId = currentChatId
+      if (!chatId) {
+        chatId = createNewChat()
+      }
+
+      // Guardar mensaje del usuario en el contexto
+      const userMessage = { content: input, role: "user" as const }
+      addMessageToChat(chatId, userMessage)
+
+      // Enviar mensaje
+      void append(userMessage)
       setInput("")
     }
   }
@@ -59,6 +95,11 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
     if (messages.length > 0) {
       reload()
     }
+  }
+
+  const handleNewChat = () => {
+    createNewChat()
+    setMessages([])
   }
 
   const header = (
@@ -216,17 +257,32 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
 
           {/* Header con botón de menú */}
           <div className="flex items-center justify-between p-4 md:p-6 bg-green-900/20 backdrop-blur-xl border-b border-green-500/30 relative z-10">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-green-300 hover:text-white hover:bg-green-800/50"
-            >
-              <Menu className="h-5 w-5" />
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSidebarOpen(!sidebarOpen)}
+                className="text-green-300 hover:text-white hover:bg-green-800/50"
+              >
+                <Menu className="h-5 w-5" />
+              </Button>
+              {currentChat && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleNewChat}
+                  className="text-green-300 hover:text-white hover:bg-green-800/50"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nuevo Chat
+                </Button>
+              )}
+            </div>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span className="text-green-300 text-sm font-bold">ORIONA IA (creada por Jesus Monsalvo)</span>
+              <span className="text-green-300 text-sm font-bold">
+                {currentChat ? currentChat.title : "ORIONA IA (creada por Jesus Monsalvo)"}
+              </span>
             </div>
           </div>
 

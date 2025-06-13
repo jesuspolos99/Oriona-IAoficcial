@@ -1,13 +1,14 @@
 import { cn } from "@/lib/utils"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AuthWrapper } from "@/components/auth/auth-wrapper"
+import { ChatProvider } from "@/lib/chat-context"
 import type { ReactNode } from "react"
 
 export const metadata = {
   title: "ORIONA - Asistente Cósmica de IA",
   description:
     "ORIONA es tu asistente cósmica de IA. Explora el universo del conocimiento con inteligencia galáctica de última generación. Potenciada por Groq y Llama 3.1.",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -34,12 +35,13 @@ export default function Layout({ children }: { children: ReactNode }) {
       </head>
       <body className={cn("h-full bg-gray-900")}>
         <TooltipProvider delayDuration={0}>
-          <AuthWrapper>{children}</AuthWrapper>
+          <AuthWrapper>
+            <ChatProvider>{children}</ChatProvider>
+          </AuthWrapper>
         </TooltipProvider>
       </body>
     </html>
   )
 }
 
-
-import './globals.css'
+import "./globals.css"
