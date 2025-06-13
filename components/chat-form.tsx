@@ -105,14 +105,16 @@ export function ChatForm({ className, ...props }: React.ComponentProps<"form">) 
   const header = (
     <div className="m-auto flex max-w-4xl flex-col gap-8 text-center px-4">
       {/* Logo marcianito */}
-      <div className="flex flex-col items-center gap-8">
-        <AlienLogo />
+      <div className="flex flex-col items-center gap-8 relative z-0">
+        <div className="relative z-0">
+          <AlienLogo />
+        </div>
 
         <div className="space-y-4">
-          <h1 className="text-5xl md:text-8xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-2xl tracking-tight">
+          <h1 className="text-5xl md:text-8xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-2xl tracking-tight relative z-10">
             ORIONA
           </h1>
-          <div className="space-y-2">
+          <div className="space-y-2 relative z-10">
             <p className="text-xl md:text-3xl text-green-100 font-semibold tracking-wide">Asistente Cósmica de IA</p>
             <div className="flex items-center justify-center gap-3 text-sm md:text-base text-green-300">
               <div className="w-2 h-2 md:w-3 md:h-3 bg-green-400 rounded-full animate-pulse"></div>

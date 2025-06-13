@@ -108,21 +108,21 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
         )}
       >
         {/* Header del sidebar */}
-        <div className="flex items-center justify-between p-4 border-b border-green-500/30">
+        <div className="flex items-center justify-between p-4 border-b border-green-500/30 relative z-10">
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <AlienLogo className="w-8 h-8" />
+            <div className="relative z-0">
+              <AlienLogo className="w-6 h-6 flex-shrink-0" />
             </div>
-            <div>
-              <h2 className="text-green-100 font-semibold text-sm">{user?.name || "Usuario"}</h2>
-              <p className="text-green-400 text-xs">{user?.email || "Cargando..."}</p>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-green-100 font-semibold text-sm truncate">{user?.name || "Usuario"}</h2>
+              <p className="text-green-400 text-xs truncate">{user?.email || "Cargando..."}</p>
             </div>
           </div>
           <Button
             variant="ghost"
             size="sm"
             onClick={onToggle}
-            className="text-green-400 hover:text-white hover:bg-green-800/50"
+            className="text-green-400 hover:text-white hover:bg-green-800/50 flex-shrink-0 z-10"
           >
             <X className="h-4 w-4" />
           </Button>
@@ -148,7 +148,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
 
           {chats.length === 0 ? (
             <div className="text-center py-8">
-              <div className="w-16 h-16 mx-auto mb-4 opacity-50">
+              <div className="w-12 h-12 mx-auto mb-4 opacity-50 relative z-0">
                 <AlienLogo />
               </div>
               <p className="text-green-400 text-sm">No hay conversaciones aún</p>
