@@ -92,3 +92,82 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Estilos específicos para dispositivos */
+.mobile-layout {
+  /* Optimizaciones para móvil */
+  --content-max-width: 100%;
+  --sidebar-overlay: block;
+}
+
+.tablet-layout {
+  /* Optimizaciones para tablet */
+  --content-max-width: 90%;
+  --sidebar-overlay: block;
+}
+
+.desktop-layout {
+  /* Optimizaciones para desktop */
+  --content-max-width: 80%;
+  --sidebar-overlay: none;
+}
+
+.touch-device {
+  /* Mejoras para dispositivos táctiles */
+  --touch-target-size: 44px;
+}
+
+.ios-device {
+  /* Optimizaciones específicas para iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+.android-device {
+  /* Optimizaciones específicas para Android */
+  overscroll-behavior: contain;
+}
+
+.portrait-mode {
+  /* Estilos para orientación vertical */
+  --orientation-padding: 1rem;
+}
+
+.landscape-mode {
+  /* Estilos para orientación horizontal */
+  --orientation-padding: 0.5rem;
+}
+
+/* Mejoras de scroll para móvil */
+@media (max-width: 768px) {
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+
+  /* Prevenir zoom en inputs en iOS */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Mejoras para tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tablet-layout .sidebar {
+    width: 320px;
+  }
+}
+
+/* Animaciones suaves para cambios de orientación */
+@media (orientation: landscape) {
+  .landscape-mode {
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+@media (orientation: portrait) {
+  .portrait-mode {
+    transition: all 0.3s ease-in-out;
+  }
+}
