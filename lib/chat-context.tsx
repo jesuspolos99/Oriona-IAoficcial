@@ -76,7 +76,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     const newChatId = crypto.randomUUID()
     const newChat: Chat = {
       id: newChatId,
-      title: "Nueva Conversación Cósmica",
+      title: "Nueva Aventura Espacial",
       messages: [],
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -114,7 +114,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
           }
 
           // Auto-generar título basado en el primer mensaje del usuario
-          if (chat.title === "Nueva Conversación Cósmica" && message.role === "user") {
+          if (chat.title === "Nueva Aventura Espacial" && message.role === "user") {
             const title = message.content.length > 50 ? message.content.substring(0, 50) + "..." : message.content
             updatedChat.title = title
           }

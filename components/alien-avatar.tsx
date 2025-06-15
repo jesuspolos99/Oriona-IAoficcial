@@ -1,103 +1,162 @@
 "use client"
 
-export function AlienAvatar({ className, size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
+export function AlienAvatar({ className, size = "md" }: { className?: string; size?: "sm" | "md" | "lg" | "xl" }) {
   const sizes = {
     sm: "w-12 h-12",
     md: "w-16 h-16",
-    lg: "w-24 h-24",
+    lg: "w-32 h-32", // MUCHO MÁS GRANDE para el login
+    xl: "w-48 h-48", // GIGANTE para casos especiales
   }
 
   const innerSizes = {
-    sm: { head: "w-8 h-8", body: "w-6 h-8", eyes: "w-1.5 h-1.5", antenna: "h-2" },
-    md: { head: "w-12 h-12", body: "w-8 h-10", eyes: "w-2 h-2", antenna: "h-3" },
-    lg: { head: "w-16 h-16", body: "w-12 h-14", eyes: "w-3 h-3", antenna: "h-4" },
+    sm: { ovni: "w-8 h-4", cupula: "w-6 h-3", conejo: "w-4 h-4", orejas: "h-2" },
+    md: { ovni: "w-12 h-6", cupula: "w-8 h-4", conejo: "w-6 h-6", orejas: "h-3" },
+    lg: { ovni: "w-24 h-12", cupula: "w-20 h-10", conejo: "w-16 h-16", orejas: "h-8" }, // MÁS GRANDE
+    xl: { ovni: "w-32 h-16", cupula: "w-28 h-14", conejo: "w-24 h-24", orejas: "h-12" }, // GIGANTE
   }
 
   const s = innerSizes[size]
 
   return (
     <div className={`${className} ${sizes[size]} relative`}>
-      {/* Aura galáctica sutil */}
-      <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 to-emerald-400/10 rounded-full blur-lg animate-pulse"></div>
+      {/* Aura cósmica sutil */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-lg animate-pulse"></div>
 
-      {/* Cuerpo principal */}
-      <div className="relative bg-gradient-to-b from-green-400/90 to-green-500/90 rounded-full p-2 shadow-lg border border-green-300/30 backdrop-blur-sm">
-        {/* Cabeza alienígena */}
+      {/* OVNI principal */}
+      <div className="relative bg-gradient-to-b from-gray-300/90 to-gray-500/90 rounded-full p-2 shadow-lg border border-gray-300/30 backdrop-blur-sm">
+        {/* Cúpula transparente */}
         <div
-          className={`${s.head} bg-gradient-to-b from-green-300/95 to-green-400/95 rounded-full mx-auto relative border border-green-200/20`}
+          className={`absolute -top-2 left-1/2 transform -translate-x-1/2 ${s.cupula} bg-gradient-to-b from-cyan-300/60 to-blue-400/60 rounded-t-full border border-cyan-200/40`}
         >
-          {/* Ojos grandes expresivos */}
-          <div className="flex justify-center gap-1 pt-2">
-            <div className={`${s.eyes} bg-black rounded-full relative overflow-hidden`}>
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-800 to-black"></div>
-              <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full animate-ping"></div>
-              <div className="absolute bottom-0 right-0 w-0.5 h-0.5 bg-green-300 rounded-full"></div>
-            </div>
-            <div className={`${s.eyes} bg-black rounded-full relative overflow-hidden`}>
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-800 to-black"></div>
-              <div
-                className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full animate-ping"
-                style={{ animationDelay: "0.3s" }}
-              ></div>
-              <div className="absolute bottom-0 right-0 w-0.5 h-0.5 bg-green-300 rounded-full"></div>
-            </div>
-          </div>
+          {/* Reflejos */}
+          <div className="absolute top-0.5 left-1 w-1 h-0.5 bg-white/70 rounded-full blur-xs"></div>
+        </div>
 
-          {/* Antenas con cristales */}
-          <div className="absolute -top-1 left-1/4 w-0.5 bg-green-400 rounded-full" style={{ height: s.antenna }}>
-            <div className="absolute -top-1 -left-1 w-2 h-2 bg-gradient-to-br from-green-300 to-emerald-300 rounded-full animate-bounce border border-green-200/40">
-              <div className="absolute top-0.5 left-0.5 w-0.5 h-0.5 bg-white rounded-full"></div>
-            </div>
-          </div>
-          <div className="absolute -top-1 right-1/4 w-0.5 bg-green-400 rounded-full" style={{ height: s.antenna }}>
+        {/* Conejo piloto - MUCHO MÁS GRANDE */}
+        <div className={`absolute -top-1 left-1/2 transform -translate-x-1/2 ${s.conejo}`}>
+          {/* Cabeza del conejo - MÁS GRANDE */}
+          <div
+            className={`${size === "lg" ? "w-8 h-8" : size === "xl" ? "w-12 h-12" : "w-3 h-3"} bg-gradient-to-b from-orange-200/95 to-orange-300/95 rounded-full mx-auto relative border border-orange-100/30`}
+          >
+            {/* Orejas largas - MÁS GRANDES */}
             <div
-              className="absolute -top-1 -left-1 w-2 h-2 bg-gradient-to-br from-emerald-300 to-green-300 rounded-full animate-bounce border border-green-200/40"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <div className="absolute top-0.5 left-0.5 w-0.5 h-0.5 bg-white rounded-full"></div>
+              className={`absolute -top-2 left-0 ${size === "lg" ? "w-2 h-8" : size === "xl" ? "w-3 h-12" : "w-0.5 h-2"} bg-gradient-to-t from-orange-200/80 to-orange-100/80 rounded-full rotate-15 border border-orange-100/20`}
+            ></div>
+            <div
+              className={`absolute -top-2 right-0 ${size === "lg" ? "w-2 h-8" : size === "xl" ? "w-3 h-12" : "w-0.5 h-2"} bg-gradient-to-t from-orange-200/80 to-orange-100/80 rounded-full -rotate-15 border border-orange-100/20`}
+            ></div>
+
+            {/* Interior rosado de orejas - MÁS VISIBLE */}
+            <div
+              className={`absolute -top-1.5 left-0.5 ${size === "lg" ? "w-1 h-4" : size === "xl" ? "w-1.5 h-6" : "w-0.5 h-1"} bg-pink-300/70 rounded-full rotate-15`}
+            ></div>
+            <div
+              className={`absolute -top-1.5 right-0.5 ${size === "lg" ? "w-1 h-4" : size === "xl" ? "w-1.5 h-6" : "w-0.5 h-1"} bg-pink-300/70 rounded-full -rotate-15`}
+            ></div>
+
+            {/* Ojos expresivos - MÁS GRANDES */}
+            <div className="flex justify-center gap-0.5 pt-0.5">
+              <div
+                className={`${size === "lg" ? "w-2 h-2" : size === "xl" ? "w-3 h-3" : "w-0.5 h-0.5"} bg-black rounded-full relative border border-gray-800`}
+              >
+                <div
+                  className={`absolute top-0 left-0 ${size === "lg" ? "w-1 h-1" : size === "xl" ? "w-1.5 h-1.5" : "w-0.5 h-0.5"} bg-white rounded-full animate-ping`}
+                ></div>
+                <div className="absolute bottom-0 right-0 w-0.5 h-0.5 bg-blue-300/60 rounded-full"></div>
+              </div>
+              <div
+                className={`${size === "lg" ? "w-2 h-2" : size === "xl" ? "w-3 h-3" : "w-0.5 h-0.5"} bg-black rounded-full relative border border-gray-800`}
+              >
+                <div
+                  className={`absolute top-0 left-0 ${size === "lg" ? "w-1 h-1" : size === "xl" ? "w-1.5 h-1.5" : "w-0.5 h-0.5"} bg-white rounded-full animate-ping`}
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+                <div className="absolute bottom-0 right-0 w-0.5 h-0.5 bg-blue-300/60 rounded-full"></div>
+              </div>
             </div>
+
+            {/* Nariz rosada - MÁS GRANDE */}
+            <div
+              className={`absolute bottom-0.5 left-1/2 transform -translate-x-1/2 ${size === "lg" ? "w-1 h-1" : size === "xl" ? "w-1.5 h-1.5" : "w-0.5 h-0.5"} bg-pink-400 rounded-full border border-pink-300`}
+            ></div>
+
+            {/* Bigotes - MÁS VISIBLES */}
+            <div
+              className={`absolute bottom-0.5 left-0 ${size === "lg" ? "w-3 h-0.5" : size === "xl" ? "w-4 h-1" : "w-1 h-0.5"} bg-gray-600/50 rounded-full`}
+            ></div>
+            <div
+              className={`absolute bottom-0.5 right-0 ${size === "lg" ? "w-3 h-0.5" : size === "xl" ? "w-4 h-1" : "w-1 h-0.5"} bg-gray-600/50 rounded-full`}
+            ></div>
+
+            {/* Sonrisa del conejo */}
+            <div
+              className={`absolute bottom-0.5 left-1/2 transform -translate-x-1/2 ${size === "lg" ? "w-2 h-0.5" : size === "xl" ? "w-3 h-1" : "w-1 h-0.5"} bg-pink-500/60 rounded-full`}
+            ></div>
           </div>
 
-          {/* Detalles faciales */}
-          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1 h-0.5 bg-green-600/60 rounded-full"></div>
-          <div className="flex justify-center gap-0.5 absolute bottom-1 left-1/2 transform -translate-x-1/2">
-            <div className="w-0.5 h-0.5 bg-green-600/40 rounded-full"></div>
-            <div className="w-0.5 h-0.5 bg-green-600/40 rounded-full"></div>
+          {/* Cuerpo pequeño - MÁS GRANDE */}
+          <div
+            className={`${size === "lg" ? "w-6 h-4" : size === "xl" ? "w-8 h-6" : "w-2 h-1.5"} bg-gradient-to-b from-orange-200/85 to-orange-300/85 rounded-full mx-auto mt-0.5 border border-orange-100/20`}
+          >
+            {/* Brazos controlando - MÁS VISIBLES */}
+            <div
+              className={`absolute top-1 -left-0.5 ${size === "lg" ? "w-2 h-1" : size === "xl" ? "w-3 h-1.5" : "w-1 h-0.5"} bg-orange-200/70 rounded-full rotate-45 border border-orange-100/30`}
+            ></div>
+            <div
+              className={`absolute top-1 -right-0.5 ${size === "lg" ? "w-2 h-1" : size === "xl" ? "w-3 h-1.5" : "w-1 h-0.5"} bg-orange-200/70 rounded-full -rotate-45 border border-orange-100/30`}
+            ></div>
+
+            {/* Manos del conejo */}
+            <div
+              className={`absolute top-0.5 -left-1 ${size === "lg" ? "w-1.5 h-1.5" : size === "xl" ? "w-2 h-2" : "w-1 h-1"} bg-orange-100/80 rounded-full border border-orange-200/40`}
+            ></div>
+            <div
+              className={`absolute top-0.5 -right-1 ${size === "lg" ? "w-1.5 h-1.5" : size === "xl" ? "w-2 h-2" : "w-1 h-1"} bg-orange-100/80 rounded-full border border-orange-200/40`}
+            ></div>
           </div>
         </div>
 
-        {/* Cuerpo alienígena */}
+        {/* Base del OVNI */}
         <div
-          className={`${s.body} bg-gradient-to-b from-green-400/85 to-green-500/85 rounded-full mx-auto -mt-1 border border-green-300/20 relative`}
+          className={`${s.ovni} bg-gradient-to-b from-gray-400/85 to-gray-600/85 rounded-full mx-auto relative border border-gray-300/30`}
         >
-          {/* Brazos articulados */}
-          <div className="absolute top-2 -left-2 w-4 h-1 bg-green-400/70 rounded-full rotate-45 origin-right">
-            <div className="absolute -right-1 -top-0.5 w-2 h-2 bg-green-300/80 rounded-full border border-green-200/30">
-              <div className="absolute top-0.5 left-0.5 w-0.5 h-0.5 bg-white/60 rounded-full"></div>
-            </div>
-          </div>
-          <div className="absolute top-2 -right-2 w-4 h-1 bg-green-400/70 rounded-full -rotate-45 origin-left">
-            <div className="absolute -left-1 -top-0.5 w-2 h-2 bg-green-300/80 rounded-full border border-green-200/30">
-              <div className="absolute top-0.5 left-0.5 w-0.5 h-0.5 bg-white/60 rounded-full"></div>
-            </div>
-          </div>
+          {/* Luces parpadeantes - MÁS GRANDES */}
+          <div
+            className={`absolute top-0.5 left-1 ${size === "lg" ? "w-1.5 h-1.5" : size === "xl" ? "w-2 h-2" : "w-0.5 h-0.5"} bg-cyan-400 rounded-full animate-ping shadow-lg shadow-cyan-400/50`}
+          ></div>
+          <div
+            className={`absolute top-0.5 right-1 ${size === "lg" ? "w-1.5 h-1.5" : size === "xl" ? "w-2 h-2" : "w-0.5 h-0.5"} bg-blue-400 rounded-full animate-ping shadow-lg shadow-blue-400/50`}
+            style={{ animationDelay: "0.3s" }}
+          ></div>
+          <div
+            className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 ${size === "lg" ? "w-1.5 h-1.5" : size === "xl" ? "w-2 h-2" : "w-0.5 h-0.5"} bg-purple-400 rounded-full animate-ping shadow-lg shadow-purple-400/50`}
+            style={{ animationDelay: "0.6s" }}
+          ></div>
 
-          {/* Detalles del pecho */}
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="w-2 h-1 bg-green-600/30 rounded-full"></div>
-            <div className="w-1 h-0.5 bg-green-600/40 rounded-full mx-auto mt-0.5"></div>
-          </div>
+          {/* Anillo central */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-300/60 to-transparent rounded-full"></div>
         </div>
 
-        {/* Piernas */}
-        <div className="absolute -bottom-1 left-1/3 w-1 h-2 bg-green-500/70 rounded-full"></div>
-        <div className="absolute -bottom-1 right-1/3 w-1 h-2 bg-green-500/70 rounded-full"></div>
+        {/* Rayo tractor */}
+        <div
+          className={`absolute -bottom-2 left-1/2 transform -translate-x-1/2 ${size === "lg" ? "w-8 h-6" : size === "xl" ? "w-12 h-8" : "w-4 h-3"} bg-gradient-to-b from-cyan-400/30 to-transparent rounded-b-full animate-pulse`}
+        >
+          <div
+            className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 ${size === "lg" ? "w-4 h-3" : size === "xl" ? "w-6 h-4" : "w-2 h-1.5"} bg-gradient-to-b from-blue-400/20 to-transparent rounded-b-full`}
+          ></div>
+        </div>
       </div>
 
-      {/* Partículas mágicas */}
-      <div className="absolute -top-1 -right-1 w-1 h-1 bg-green-300 rounded-full animate-ping"></div>
-      <div className="absolute -bottom-1 -left-1 w-0.5 h-0.5 bg-emerald-300 rounded-full animate-pulse"></div>
-      <div className="absolute top-1 -left-2 w-0.5 h-0.5 bg-green-200 rounded-full animate-bounce"></div>
+      {/* Partículas mágicas - MÁS GRANDES */}
+      <div
+        className={`absolute -top-1 -right-1 ${size === "lg" ? "w-2 h-2" : size === "xl" ? "w-3 h-3" : "w-1 h-1"} bg-cyan-300 rounded-full animate-ping shadow-lg shadow-cyan-300/50`}
+      ></div>
+      <div
+        className={`absolute -bottom-1 -left-1 ${size === "lg" ? "w-1.5 h-1.5" : size === "xl" ? "w-2 h-2" : "w-0.5 h-0.5"} bg-purple-300 rounded-full animate-pulse shadow-lg shadow-purple-300/50`}
+      ></div>
+      <div
+        className={`absolute top-1 -left-2 ${size === "lg" ? "w-1 h-1" : size === "xl" ? "w-1.5 h-1.5" : "w-0.5 h-0.5"} bg-blue-200 rounded-full animate-bounce`}
+      ></div>
     </div>
   )
 }

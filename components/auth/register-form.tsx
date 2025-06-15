@@ -74,9 +74,10 @@ export function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) 
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
+            {/* CONEJO GIGANTE PARA EL REGISTRO */}
             <AlienAvatar size="lg" className="relative z-0" />
           </div>
-          <h1 className="text-3xl font-bold text-green-100 mb-2 relative z-10">Únete a ORIONA</h1>
+          <h1 className="text-3xl font-bold text-green-100 mb-2 relative z-10">Únete a JUANCHO</h1>
           <p className="text-green-300 text-sm relative z-10">Crea tu cuenta cósmica</p>
         </div>
 

@@ -5,9 +5,9 @@ import { ChatProvider } from "@/lib/chat-context"
 import type { ReactNode } from "react"
 
 export const metadata = {
-  title: "ORIONA - Asistente Cósmica de IA",
+  title: "JUANCHO - Asistente Espacial de IA",
   description:
-    "ORIONA es tu asistente cósmica de IA. Explora el universo del conocimiento con inteligencia galáctica de última generación. Potenciada por Groq y Llama 3.1.",
+    "JUANCHO es tu compañero espacial de IA. Un conejo aventurero que vuela en su OVNI explorando el universo del conocimiento. Potenciado por Groq y Llama 3.1.",
   generator: "v0.dev",
 }
 

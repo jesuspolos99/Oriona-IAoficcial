@@ -57,6 +57,7 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-6">
+            {/* CONEJO GIGANTE PARA EL LOGIN */}
             <AlienAvatar size="lg" className="relative z-0" />
           </div>
           <h1 className="text-3xl font-bold text-green-100 mb-2 relative z-10">Bienvenido de vuelta</h1>

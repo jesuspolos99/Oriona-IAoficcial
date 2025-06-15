@@ -229,7 +229,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
             )}
           >
             <Plus className={cn("mr-2", config.iconSize)} />
-            {device.isMobile ? "Nueva Conversación" : "Nueva Conversación Cósmica"}
+            {device.isMobile ? "Nueva Conversación" : "Nueva Aventura Espacial"}
           </Button>
         </div>
 
@@ -243,7 +243,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
             )}
           >
             <MessageSquare className="h-3 w-3" />
-            Expediciones Recientes ({chats.length})
+            Aventuras Espaciales ({chats.length})
           </h3>
 
           {chats.length === 0 ? (
@@ -252,7 +252,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
                 <AlienLogo />
               </div>
               <p className={cn("text-green-400", config.textSize)}>No hay conversaciones aún</p>
-              <p className={cn("text-green-500 mt-1", config.subtitleSize)}>¡Crea tu primera conversación cósmica!</p>
+              <p className={cn("text-green-500 mt-1", config.subtitleSize)}>¡Crea tu primera aventura espacial!</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -369,7 +369,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
               onClick={() => alert("Configuración próximamente 🛸")}
             >
               <Settings className={cn("mr-2 md:mr-3", config.iconSize)} />
-              {device.isMobile ? "Configuración" : "Configuración Galáctica"}
+              {device.isMobile ? "Configuración" : "Configuración Espacial"}
             </Button>
             <Button
               variant="ghost"
@@ -380,7 +380,7 @@ export function Sidebar({ isOpen, onToggle }: SidebarProps) {
               onClick={() => alert("Temas próximamente 🎨")}
             >
               <Palette className={cn("mr-2 md:mr-3", config.iconSize)} />
-              {device.isMobile ? "Temas" : "Temas Cósmicos"}
+              {device.isMobile ? "Temas" : "Temas del OVNI"}
             </Button>
             <Button
               variant="ghost"

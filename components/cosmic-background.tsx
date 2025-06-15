@@ -21,31 +21,67 @@ export function CosmicBackground() {
       {/* Vía Láctea */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/5 to-transparent transform rotate-12 blur-sm"></div>
 
-      {/* Luna grande con detalles */}
+      {/* LUNA GRANDE CON BANDERA DE COLOMBIA */}
       <div
-        className="absolute w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-gray-300/40 to-gray-500/40 blur-sm animate-pulse"
+        className="absolute w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full bg-gradient-to-br from-gray-200/50 to-gray-400/50 blur-sm animate-pulse"
         style={{
-          top: "15%",
-          right: "8%",
-          animationDuration: "4s",
+          top: "10%",
+          right: "5%",
+          animationDuration: "6s",
         }}
       >
-        <div className="absolute inset-2 rounded-full bg-gradient-to-br from-gray-200/30 to-gray-400/30"></div>
-        {/* Cráteres lunares detallados */}
-        <div className="absolute top-4 left-6 w-3 h-3 bg-gray-600/40 rounded-full">
-          <div className="absolute inset-0.5 bg-gray-700/30 rounded-full"></div>
+        {/* Superficie lunar detallada */}
+        <div className="absolute inset-4 rounded-full bg-gradient-to-br from-gray-100/40 to-gray-300/40"></div>
+
+        {/* Cráteres lunares más detallados */}
+        <div className="absolute top-8 left-12 w-6 h-6 bg-gray-600/40 rounded-full">
+          <div className="absolute inset-1 bg-gray-700/30 rounded-full"></div>
         </div>
-        <div className="absolute top-8 right-8 w-2 h-2 bg-gray-600/30 rounded-full">
-          <div className="absolute inset-0.5 bg-gray-700/20 rounded-full"></div>
+        <div className="absolute top-16 right-16 w-4 h-4 bg-gray-600/30 rounded-full">
+          <div className="absolute inset-1 bg-gray-700/20 rounded-full"></div>
         </div>
-        <div className="absolute bottom-6 left-8 w-4 h-4 bg-gray-600/35 rounded-full">
-          <div className="absolute inset-1 bg-gray-700/25 rounded-full"></div>
+        <div className="absolute bottom-12 left-16 w-8 h-8 bg-gray-600/35 rounded-full">
+          <div className="absolute inset-2 bg-gray-700/25 rounded-full"></div>
         </div>
-        <div className="absolute bottom-4 right-4 w-1.5 h-1.5 bg-gray-600/40 rounded-full"></div>
-        <div className="absolute top-6 left-4 w-1 h-1 bg-gray-600/30 rounded-full"></div>
+        <div className="absolute bottom-8 right-8 w-3 h-3 bg-gray-600/40 rounded-full"></div>
+        <div className="absolute top-12 left-8 w-2 h-2 bg-gray-600/30 rounded-full"></div>
+
         {/* Mares lunares */}
-        <div className="absolute top-3 right-6 w-6 h-4 bg-gray-700/20 rounded-full blur-sm"></div>
-        <div className="absolute bottom-8 left-6 w-4 h-3 bg-gray-700/15 rounded-full blur-sm"></div>
+        <div className="absolute top-6 right-12 w-12 h-8 bg-gray-700/20 rounded-full blur-sm"></div>
+        <div className="absolute bottom-16 left-12 w-8 h-6 bg-gray-700/15 rounded-full blur-sm"></div>
+
+        {/* BANDERA DE COLOMBIA EN LA LUNA */}
+        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          {/* Asta de la bandera */}
+          <div className="absolute w-1 h-16 md:h-20 lg:h-24 bg-gray-400/80 rounded-full shadow-lg"></div>
+
+          {/* Bandera ondeando */}
+          <div
+            className="absolute left-1 -top-2 w-12 h-8 md:w-16 md:h-10 lg:w-20 lg:h-12 shadow-2xl animate-pulse"
+            style={{
+              background:
+                "linear-gradient(to bottom, #FFDE00 0%, #FFDE00 50%, #003893 50%, #003893 75%, #CE1126 75%, #CE1126 100%)",
+              borderRadius: "0 4px 4px 0",
+              animationDuration: "3s",
+            }}
+          >
+            {/* Efecto de ondeo */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse rounded-r"></div>
+
+            {/* Sombra de la bandera */}
+            <div className="absolute -bottom-1 -right-1 w-full h-full bg-black/20 rounded-r blur-sm -z-10"></div>
+          </div>
+
+          {/* Placa conmemorativa */}
+          <div className="absolute top-16 md:top-20 lg:top-24 left-0 w-8 h-4 md:w-10 md:h-5 bg-gray-300/60 rounded border border-gray-400/40">
+            <div className="absolute inset-0.5 bg-gray-200/40 rounded text-xs flex items-center justify-center">
+              <span className="text-gray-800/80 font-bold text-[6px] md:text-[8px]">COL</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Brillo especial alrededor de la bandera */}
+        <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-yellow-400/10 rounded-full blur-xl animate-pulse"></div>
       </div>
 
       {/* Planeta Júpiter con bandas */}
